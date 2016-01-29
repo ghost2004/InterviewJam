@@ -26,7 +26,7 @@ public class RemoveNthFromEnd {
         
         if (step != n) 
             return head;
-        while( pRight !=null) {
+        while( pRight != null) {
             prev = pLeft;
             pLeft = pLeft.next;
             pRight = pRight.next;
