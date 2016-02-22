@@ -1,5 +1,7 @@
 package Trees;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,7 +37,7 @@ public class TreeNode {
         }
     }
     
-    public String serialize() {
+    public String serializeS() {
         StringBuffer buf = new StringBuffer();
         printNode(this, buf);
         int idx = buf.length()-1;
@@ -75,7 +77,7 @@ public class TreeNode {
         return node;        
     }
     
-    public static TreeNode deserialize(String input) {
+    public static TreeNode deserializeS(String input) {
         if (input == null || input.length() == 0)
             return null;
         String stream = replaceBlank(input);
@@ -85,11 +87,49 @@ public class TreeNode {
         
         
     }
+    private void preOrder(TreeNode node, StringBuffer buf) {
+        if (node == null) {
+            buf.append("#,");
+            return;
+        }
+        buf.append(node.val+",");
+        preOrder(node.left, buf);
+        preOrder(node.right,buf);
+            
+    }
+    // Encodes a tree to a single string.
+    public String serialize() {
+        StringBuffer buf = new StringBuffer();
+        preOrder(this, buf);
+        
+        return buf.toString();
+    }
     
+    
+    private TreeNode buildTree(LinkedList<String> list) {
+        String val = list.poll();
+        if (val.equals("#"))
+            return null;
+        TreeNode node = new TreeNode(Integer.valueOf(val));
+        node.left = buildTree(list);
+        node.right = buildTree(list);
+        
+        return node;
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data == null || data.length() == 0)
+            return null;
+        LinkedList<String> nodes = new LinkedList<String>();
+        nodes.addAll(Arrays.asList(data.split(",")));
+        return buildTree(nodes);
+
+    }
     public static void main(String args[]) {
-        TreeNode t = TreeNode.deserialize("1,2,3,#,#,4,#,#,5");
+        TreeNode t = TreeNode.deserializeS("1,2,3,#,#,4,#,#,5");
         System.out.println(t.serialize());
-        t = TreeNode.deserialize("30,20,10,#,#,25,24,23,#,#,#,27,#,#,40,35,31,#,#,37,#,#,55");
+        t = TreeNode.deserializeS("30,20,10,#,#,25,24,23,#,#,#,27,#,#,40,35,31,#,#,37,#,#,55");
         System.out.println(t.serialize());
         
     }
