@@ -106,9 +106,9 @@ public class TreeNode {
     }
     
     
-    private TreeNode buildTree(LinkedList<String> list) {
+    private static TreeNode buildTree(LinkedList<String> list) {
         String val = list.poll();
-        if (val.equals("#"))
+        if (val == null ||val.equals("#"))
             return null;
         TreeNode node = new TreeNode(Integer.valueOf(val));
         node.left = buildTree(list);
@@ -118,7 +118,7 @@ public class TreeNode {
     }
 
     // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
+    public static TreeNode deserialize(String data) {
         if (data == null || data.length() == 0)
             return null;
         LinkedList<String> nodes = new LinkedList<String>();
@@ -127,9 +127,9 @@ public class TreeNode {
 
     }
     public static void main(String args[]) {
-        TreeNode t = TreeNode.deserializeS("1,2,3,#,#,4,#,#,5");
+        TreeNode t = TreeNode.deserialize("1,2,3,#,#,4,#,#,5");
         System.out.println(t.serialize());
-        t = TreeNode.deserializeS("30,20,10,#,#,25,24,23,#,#,#,27,#,#,40,35,31,#,#,37,#,#,55");
+        t = TreeNode.deserialize("30,20,10,#,#,25,24,23,#,#,#,27,#,#,40,35,31,#,#,37,#,#,55");
         System.out.println(t.serialize());
         
     }
