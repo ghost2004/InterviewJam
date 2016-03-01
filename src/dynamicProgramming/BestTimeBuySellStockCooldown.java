@@ -41,5 +41,35 @@ public class BestTimeBuySellStockCooldown {
         return Math.max(sell[length-1], cool[length-1]);
         
     }
+    
+    public int maxProfit2(int[] prices) {
+        if (prices == null || prices.length < 2)
+            return 0;
+        int len = prices.length;
+        // sell[i] means max profit at day i , last transaction is sell
+        int sell[] = new int[len];
+        // buy[i] means max profit at day i , last transaction is buy
+        int buy[] = new int[len];
+        
+        // the profit of first sell day is zero -- nothing to sell
+        sell[0] = 0;
+        // the profit of second sell day is 0 or buy at day1, sell at day2
+        sell[1] = Math.max(0, prices[1]- prices[0]);
+        // the profit of first buy day is the negative number of first day price
+        buy[0] = -prices[0];
+        // the profit of first buy day is the negative number of first or second day price
+        buy[1] = Math.max(-prices[0],-prices[1]);
+        for (int i = 2; i < len; i++) {
+            // profit of sell day i, is sell day i-1, or buy at day i-1 and sell at day i
+            sell[i] = Math.max(sell[i-1], buy[i-1] + prices[i]);
+            // profit of buy day i, is buy day i-1, or sell at day i-2 and buy at day i;
+            buy[i] = Math.max(buy[i-1], sell[i-2] - prices[i]);
+            
+        }
+        
+        // last transaction must be sell
+        return sell[len-1];
+        
+    }
 
 }
