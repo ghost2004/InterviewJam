@@ -14,7 +14,7 @@ these rooms; other rooms are either empty (0's) or contain magic orbs that incre
  (positive integers).
 
 In order to reach the princess as quickly as possible, the knight decides to move only rightward or
- downward in each step.
+ downward in each step. 
 
 
 Write a function to determine the knight's minimum initial health so that he is able to rescue the 
