@@ -12,9 +12,10 @@ Your algorithm should run in O(n2) complexity.
 
 Follow up: Could you improve it to O(n log n) time complexity?
  */
+import java.util.*;
 public class LongestIncSubseq {
     /* solution of O(n2) */
-    public int lengthOfLIS(int[] nums) {
+    public int lengthOfLIS_v2(int[] nums) {
         if (nums == null || nums.length == 0)
             return 0;
         int len = nums.length;
@@ -35,5 +36,33 @@ public class LongestIncSubseq {
         return max;
     }
     
+
     /* solution of O(n2) */
+    public int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0)
+            return 0;
+        int len = nums.length;
+               
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        
+        for (int i = 0; i < len;i++) {
+            if(list.isEmpty() || list.get(list.size()-1) < nums[i]) {
+                list.add(nums[i]);
+            } else {
+                int left = 0;
+                int right = list.size()-1;
+                while (left < right) {
+                    int mid = (right+left)/2;
+                    if (list.get(mid) < nums[i]) {
+                        left = mid+1;
+                    } else {
+                        right = mid;
+                    }
+                }
+                list.set(left, nums[i]);
+            }
+        }
+        
+        return list.size();
+    }
 }
