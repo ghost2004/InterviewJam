@@ -1,6 +1,6 @@
 package dynamicProgramming;
 /*
- * Leetcode 53 53. Maximum Subarray
+ * Leetcode 53 Maximum Subarray
  * Find the contiguous subarray within an array (containing at least one number)
  *  which has the largest sum.
  */
