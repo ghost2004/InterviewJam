@@ -71,5 +71,36 @@ public class ScrambleString {
         }
         return false;
     }
+    
+    // dynamic programming solution
+    public boolean isScrambleDP(String s1, String s2) {
+        int length = s1.length();
+        if (length != s2.length())
+            return false;
+        // dp[i][j][k] means s1 substring starts at i, s2 substring starts at j with length k+1 is ScrambleString
+        boolean dp[][][] = new boolean[length][length][length];
+        
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                dp[i][j][0] = s1.charAt(i) == s2.charAt(j);
+            }
+        }
+        
+        
+        for (int len = 2;len <= length; len++) {
+            for (int i = length - len; i >= 0; i--) {
+                for (int j = length - len; j >= 0; j--) {
+                    boolean flag = false;
+                    for (int k = 1; k<= len; k++) {
+                        flag = (dp[i][j][k-1] && dp[i+k][j+k][len-k-1]) || (dp[i][j+len-k][k-1]&&dp[i+k][j][len-k-1]); 
+                        if (flag)
+                            break;
+                    }
+                    dp[i][j][len-1] = flag;
+                }
+            }
+        }
+        return dp[0][0][length-1];
+    }
 
 }
