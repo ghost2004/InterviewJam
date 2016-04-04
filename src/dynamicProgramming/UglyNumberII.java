@@ -8,7 +8,9 @@ Ugly numbers are positive numbers whose prime factors only include 2, 3, 5.
 
 Note that 1 is typically treated as an ugly number.
  */
+import java.util.*;
 public class UglyNumberII {
+    /*dynamic programming solution*/
     public int nthUglyNumber(int n) {
         int ugly[] = new int[n];
         ugly[0] = 1;
@@ -30,6 +32,28 @@ public class UglyNumberII {
         return ugly[n-1];
     }
     
+    /* min heap solution */
+    public int nthUglyNumberHeap(int n) {
+        Long ugly = new Long(1);
+        PriorityQueue<Long> pq = new PriorityQueue<Long>();
+        pq.offer(new Long(2));
+        pq.offer(new Long(3));
+        pq.offer(new Long(5));
+        for (int i = 1; i < n; i++) {
+            ugly = pq.poll();
+            if (ugly % 2 == 0) {
+                pq.offer(ugly*2);
+            } else if (ugly % 3 == 0) {
+                pq.offer(ugly*2);
+                pq.offer(ugly*3);
+            } else if (ugly % 5 == 0) {
+                pq.offer(ugly*2);
+                pq.offer(ugly*3);
+                pq.offer(ugly*5);
+            }
+        }
+        return ugly.intValue();
+    }
     public static void main(String args[]) {
         UglyNumberII u = new UglyNumberII();
         //for (int i = 1; i <= 10; i++)
