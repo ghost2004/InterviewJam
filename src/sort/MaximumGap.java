@@ -23,10 +23,41 @@ public class MaximumGap {
             max = Math.max(max, nums[i]);
         }
         
-        int bucket = (max - min) / nums.length + 1;
+        int minGap = (max - min) / nums.length + 1;
+        int buckets = (max - min) / minGap + 1;
+        
+        boolean filled[] = new boolean[buckets];
+        int minBucket[] = new int[buckets];
+        int maxBucket[] = new int[buckets];
+        
+        for (int i = 0; i < nums.length;i++) {
+            int idx = (nums[i] - min)/minGap;
+            if (!filled[idx]) {
+                minBucket[idx] = nums[i];
+                maxBucket[idx] = nums[i];
+                filled[idx] = true;
+            } else {
+                minBucket[idx] = Math.min(minBucket[idx], nums[i]);
+                maxBucket[idx] = Math.max(maxBucket[idx], nums[i]);
+                
+            }
+        }
         
         int maxGap = 0;
+        int prev = 0;
+        for (int i = 1; i < buckets; i++) {
+            if (filled[i]) {
+                maxGap = Math.max(maxGap, minBucket[i] - maxBucket[prev]);
+                prev = i;
+            }   
+        }
         
         return maxGap;
+    }
+    
+    public static void main(String args[]) {
+        MaximumGap gap = new MaximumGap();
+        int t1[] = {3,6,9,1};
+        System.out.println(gap.maximumGap(t1));
     }
 }
