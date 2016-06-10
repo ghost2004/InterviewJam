@@ -15,7 +15,11 @@ public class RemoveDuplicateLetters {
     public String removeDuplicateLetters(String s) {
         if (s == null || s.length() < 2)
             return s;
+        int cnt[] = new int[26];
+        for (int i = 0; i < s.length(); i++) 
+            cnt[s.charAt(i) - 'a']++;
+        String out = new String();
         
-        return s;
+        return out;
     }
 }
