@@ -30,12 +30,12 @@ public class AdditiveNumber {
 		String sums = Long.toString(sum);
 		if (sums.length() > num.length() - start)
 			return false;
-		long result = Long.parseLong(num.substring(start, start+sums.length()+1));
-		if (result != sum)
+		long result = Long.parseLong(num.substring(start, start+sums.length()));
+		if (!Long.toString(result).equals(sums) || result != sum)
 			return false;
 			
 		
-		return isValid(start+sums.length()+1, num, right, sums);
+		return isValid(start+sums.length(), num, right, sums);
 	}
 	public boolean isAdditiveNumber(String num) {
 		int length = num.length();
@@ -43,10 +43,15 @@ public class AdditiveNumber {
 			for (int j = i+1; j < length-i-1; j++) {
 				String left = num.substring(0, i+1);
 				String right = num.substring(i+1, j+1);
-				if (isValid(i+1, num, left, right))
+				if (isValid(j+1, num, left, right))
 					return true;
 			}
 		}
         return false;
     }
+	
+	public static void main(String args[]) {
+	    AdditiveNumber a = new AdditiveNumber();
+	    System.out.println(a.isAdditiveNumber("112358"));
+	}
 }
