@@ -41,6 +41,8 @@ public class RangeSumQueryMutable {
             if (sums == null)
                 return;
             int delta = val - num[i];
+            if (delta == 0)
+                return;
             num[i] = val;
             for (int idx = i+1; idx < sums.length; idx++)
                 sums[idx] += delta;
