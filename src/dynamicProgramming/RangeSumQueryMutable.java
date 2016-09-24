@@ -19,11 +19,12 @@ The array is only modifiable by the update function.
 You may assume the number of calls to update and sumRange function is distributed evenly.
  */
 public class RangeSumQueryMutable {
-    public static class NumArray {
+    // traditional solution, update complex is O(n), sum complex is O(1)
+    public static class NumArray2 {
         int num[];
         int sums[];
 
-        public NumArray(int[] nums) {
+        public NumArray2(int[] nums) {
             if (nums == null || nums.length < 1) {
                 sums = null;
                 return;
@@ -54,10 +55,58 @@ public class RangeSumQueryMutable {
             return sums[j+1] - sums[i];
         }
     }
+    // segment tree solution, update complex is O(logN), 
+    public static class SegTree {
+        public SegTree left;
+        public SegTree right;
+        public int sum;
+        int start;
+        int end;
+        public SegTree(int s, int e) {
+            start = s;
+            end = e;
+            sum = 0;
+            left = null;
+            right = null;
+        }
+    }
+    
+    public static class NumArray {
+        SegTree tree;
+        
+        
+        public NumArray(int nums[]) {
+            if (nums == null || nums.length < 1) {
+                tree =null;
+                return;
+            }
+            tree = buildTree(nums, 0, nums.length-1);
+        }
+        
+        public SegTree buildTree(int nums[], int i, int j) {
+            if (j < i)
+                return null;
+            SegTree node = new SegTree(i, j);
+            if (i == j) {
+                node.sum = nums[i];
+                return node;
+            }
+            int mid = (i + j)/2;
+            node.left = buildTree(nums, i, mid);
+            node.right = buildTree(nums, mid+1, j);
+            if (node.left != null)
+                node.sum += node.left.sum;
+            if (node.right != null)
+                node.sum += node.right.sum;
+            return node;
+        }
+        
+        
+    }
     
     public static void  main(String args[]) {
         int test[] = {1, 3, 5};
-        NumArray n = new RangeSumQueryMutable.NumArray(test);
+        NumArray2 n = new RangeSumQueryMutable.NumArray2(test);
         System.out.println(n.sumRange(0, 2));
         n.update(1, 2);
         System.out.println(n.sumRange(0, 2));
