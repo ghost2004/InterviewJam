@@ -101,6 +101,46 @@ public class RangeSumQueryMutable {
             return node;
         }
         
+        public int sumRangeHelper(SegTree node, int i, int j) {
+            // not in this range, return 0
+            if (node == null || j < node.start || i > node.end)
+                return 0;
+            // totally cover this range, return the sum
+            if (i <= node.start && j >= node.end)
+                return node.sum;
+            int mid = (node.start + node.end)/2;
+            int result = sumRangeHelper(node.left, i, Math.min(mid, j)) +
+                    sumRangeHelper(node.right, Math.max(mid+1, i), j);
+            return result;
+        }
+        
+        public int sumRange(int i, int j) {
+            return sumRangeHelper(tree, i, j);
+        }
+        
+        
+        public void updateHelper(SegTree node, int i, int val) {
+            if (node == null)
+                return;
+            
+            if (node.start == node.end && node.start == i) {
+                node.sum = val;
+                return;
+            }
+            
+            int mid = (node.start + node.end)/2;
+            if (i <= mid) {
+                updateHelper(node.left, i, val);
+            } else {
+                updateHelper(node.right, i, val);
+            }
+            
+            node.sum = node.left.sum + node.right.sum;
+        }
+        
+        public void update(int i, int val) {
+            updateHelper(tree, i, val);
+        }
         
     }
     
