@@ -34,7 +34,8 @@ public class CoinChange {
 
         for (int i = 0; i <= amount; i++) {
             for (int coin:coins) {
-                if (i+coin <= amount) {
+                // add check in case of coin value overflow
+                if (i+coin <= amount && i+coin >= coin) {
                     dp[i+coin] = Math.min(dp[i+coin], dp[i]+1);
                 }
             }
