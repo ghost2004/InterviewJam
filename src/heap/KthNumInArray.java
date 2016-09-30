@@ -42,12 +42,37 @@ public class KthNumInArray {
         return findKth(nums, left+1, end, k);
         
     }
+    
+    public int findKth2(int[] nums, int start, int end, int k) {
+        int pivot = nums[(start+end)/2];
+        int left = start;
+        int right = end;
+        int tmp;
+        while (left <= right) {
+            while ( nums[left] > pivot )
+                left++;
+            while (nums[right] < pivot)
+                right--;
+            if (left <= right) {
+                tmp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = tmp;
+                left++;
+                right--;
+            }
+        }
+        if (start > right && k <= right)
+            return findKth2(nums, start,right,k);
+        if (left < end && k >= left)
+            return findKth2(nums, left,end,k);
+        return nums[k];
+    }
     public int findKthLargest(int[] nums, int k) {
-        return findKth(nums, 0, nums.length-1, k);
+        return findKth2(nums, 0, nums.length-1, k-1);
     }
     public static void main(String args[]) {
         KthNumInArray k = new KthNumInArray();
-        int[] array1 = { -1, 2, 0, 3};
-        System.out.println(k.findKthLargest(array1, 2));
+        int[] array1 = {1};
+        System.out.println(k.findKthLargest(array1, 1));
     }
 }
