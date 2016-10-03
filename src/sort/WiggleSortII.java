@@ -64,7 +64,7 @@ public class WiggleSortII {
         int mid = partition(nums, 0, nums.length-1, nums.length/2);
         mid = nums[mid];
         
-        dumpArray(nums);
+        //dumpArray(nums);
         int[] ans = new int[nums.length];
         Arrays.fill(ans, mid);
 
@@ -94,7 +94,7 @@ public class WiggleSortII {
                 }
             }
         }
-        dumpArray(ans);
+        //dumpArray(ans);
 
         for (int i = 0; i < nums.length; i++) {
             nums[i] = ans[i];
