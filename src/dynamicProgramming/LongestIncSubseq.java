@@ -14,7 +14,7 @@ Follow up: Could you improve it to O(n log n) time complexity?
  */
 import java.util.*;
 public class LongestIncSubseq {
-    /* solution of O(n2) */
+    /* solution of O(n^2) */
     public int lengthOfLIS_v2(int[] nums) {
         if (nums == null || nums.length == 0)
             return 0;
@@ -37,7 +37,7 @@ public class LongestIncSubseq {
     }
     
 
-    /* solution of O(n2) */
+    /* solution of O(nlogn) Binary search*/
     public int lengthOfLIS(int[] nums) {
         if (nums == null || nums.length == 0)
             return 0;
@@ -46,9 +46,15 @@ public class LongestIncSubseq {
         ArrayList<Integer> list = new ArrayList<Integer>();
         
         for (int i = 0; i < len;i++) {
+            // add current number to the list
+            // 1. the list is empty
+            // 2. larger than biggest number in the list
             if(list.isEmpty() || list.get(list.size()-1) < nums[i]) {
                 list.add(nums[i]);
             } else {
+                // the current number is less than biggest number in the list
+                // do binary search to get the insert position
+                // replace the element in the list which is the smallest but bigger than num
                 int left = 0;
                 int right = list.size()-1;
                 while (left < right) {
