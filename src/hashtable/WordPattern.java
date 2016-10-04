@@ -20,7 +20,9 @@ public class WordPattern {
     public boolean wordPattern(String pattern, String str) {
         if (pattern == null || str == null)
             return false;
+        // Map from a -> dog
         HashMap<Character,String> keyMap = new HashMap<Character,String>();
+        // Map from dog -> a
         HashMap<String, Character> valMap = new HashMap<String, Character>();
         int idx = 0;
         String s[] = str.split(" ");
@@ -28,6 +30,7 @@ public class WordPattern {
             return false;
         for (idx = 0; idx < s.length; idx++) {
             Character c = pattern.charAt(idx);
+            // pattern to string check
             String val = keyMap.get(c);
             if (val == null) {
                 keyMap.put(c, s[idx]);
@@ -35,6 +38,7 @@ public class WordPattern {
                 if (!val.equals(s[idx]))
                     return false;
             }
+            // string to pattern check
             c = valMap.get(s[idx]);
             if (c == null) {
                 valMap.put(s[idx], pattern.charAt(idx));
