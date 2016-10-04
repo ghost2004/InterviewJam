@@ -54,7 +54,7 @@ public class LongestIncSubseq {
             } else {
                 // the current number is less than biggest number in the list
                 // do binary search to get the insert position
-                // replace the element in the list which is the smallest but bigger than num
+                
                 int left = 0;
                 int right = list.size()-1;
                 while (left < right) {
@@ -65,6 +65,7 @@ public class LongestIncSubseq {
                         right = mid;
                     }
                 }
+                // replace the element in the list which is the smallest but bigger than num
                 list.set(left, nums[i]);
             }
         }
