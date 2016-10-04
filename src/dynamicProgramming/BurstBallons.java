@@ -26,19 +26,27 @@ public class BurstBallons {
 
     public int maxCoins(int[] nums) {
         int length = nums.length;
+        // expand the array to [1][array][1]
         int array[] = new int[length+2];
         array[0] = 1;
         for (int i = 0; i < length; i++) {
             array[i+1] = nums[i];
         }
         array[length+1] = 1;
+        // dp[i][j] means the max coins we can get from (i, j) balloons
         int dp[][] = new int[length+2][length+2];
         
+        // length could be 1~length
         for (int len = 1; len <= length; len++ ) {
+            // scan from left boundary
             for (int left = 1; left <= length-len+1; left++) {
+                // the boundary of right
                 int right = left+len-1;
+                // within current length, all possible endings
                 for (int idx = left; idx <= right; idx++) {
-                    dp[left][right] = Math.max(dp[left][right] , dp[left][idx-1]+array[left-1]*array[idx]*array[right+1]+dp[idx+1][right]);
+                    // the maximum value could be left part + left-boundary*this*right-boundary + right part
+                    dp[left][right] = Math.max(dp[left][right] , 
+                            dp[left][idx-1]+array[left-1]*array[idx]*array[right+1]+dp[idx+1][right]);
                 }
                 
             }
