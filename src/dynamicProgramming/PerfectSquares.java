@@ -13,11 +13,15 @@ For example, given n = 12, return 3 because 12 = 4 + 4 + 4;
  */
 public class PerfectSquares {
     public int numSquares(int n) {
+        // dp[i] means minimum numbers for i
         int dp[] = new int[n+1];
         Arrays.fill(dp, Integer.MAX_VALUE);
         dp[0] = 0;
+        // scan from 0~n-1
         for (int i = 0; i < n; i++) {
+            
             for (int j = 1; i+j*j <= n;j++) {
+                // like coin changes, update possible minimum number 
                 dp[i+j*j] = Math.min(dp[i+j*j], dp[i]+1);
             }
         }
