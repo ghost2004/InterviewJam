@@ -27,10 +27,14 @@ return [9, 8, 9]
 
  */
 public class CreateMaximumNumber {
+    // find the maximum k numbers in array without changing its order
     public int[] getMaxSub(int[] array, int k) {
         int out[] = new int[k];
         int idx = 0;
         for (int i = 0; i < array.length; i++) {
+            // move the pointer back only when both condition happens
+            // 1. current element is larger than last one in candidate
+            // 2. there are enough elements in rest of array
             while (idx > 0 && array.length - i + idx > k && out[idx-1] < array[i]) {
                 idx--;
             }
@@ -40,7 +44,7 @@ public class CreateMaximumNumber {
         return out;
     }
 
-    
+    // compare the array
     public boolean arrayGreater(int[] left, int idx1, int[] right, int idx2) {
         
         for (; idx1 < left.length && idx2<right.length; idx1++,idx2++) {
@@ -59,6 +63,7 @@ public class CreateMaximumNumber {
         int out[] = new int[k];
         int start = Math.max(0, k - len2);
         int end = Math.min(k, len1);
+        // get all the combination of get k from 2 arrays
         for (int i = start; i <= end; i++) {
             int left[] = getMaxSub(nums1, i);
             int right[] = getMaxSub(nums2,k-i);
