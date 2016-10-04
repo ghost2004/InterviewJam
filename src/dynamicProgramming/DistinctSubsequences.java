@@ -18,8 +18,9 @@ public class DistinctSubsequences {
     public int numDistinct(String s, String t) {
         int tLen = t.length();
         int sLen = s.length();
+        // DP[i][j] means the number of subsequences for t(0,j) in s(0,i)
         int dp[][] = new int [sLen+1][tLen+1];
-        
+        // initialized state is alway 1
         for (int i = 0; i <= sLen; i++)
             dp[i][0] = 1;
         for (int i = 1; i <= sLen; i++) {
