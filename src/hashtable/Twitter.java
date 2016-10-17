@@ -46,13 +46,13 @@ public class Twitter {
         list.add(msg);
         follow(userId, userId);
     }
-    /*
+
     private void feedTw(PriorityQueue<TwMsg> pq, TwMsg msg) {
         pq.offer(msg);
         if (pq.size() > 10)
             pq.poll();
     }
-    */
+    
     /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
     public List<Integer> getNewsFeed(int userId) {
         LinkedList<Integer> feed = new LinkedList<Integer>();
@@ -63,7 +63,7 @@ public class Twitter {
 
         PriorityQueue<TwMsg> pq = new PriorityQueue<TwMsg>(new Comparator<TwMsg>(){
             public int compare(TwMsg a, TwMsg b) {
-                return b.timestamp - a.timestamp;
+                return a.timestamp - b.timestamp;
             }
         });
         
@@ -73,14 +73,14 @@ public class Twitter {
                 int cnt = Math.min(10, list.size());
                 for (int i = 0; i < cnt;i++) {
                     TwMsg msg = list.get(list.size()-1-i);
-                    //feedTw(pq, msg);
-                    pq.offer(msg);
+                    feedTw(pq, msg);
+                    //pq.offer(msg);
                 }
             }
         }
         
-        while (!pq.isEmpty() && feed.size() < 10) {
-            feed.add(pq.poll().tw_id);
+        while (!pq.isEmpty()) {
+            feed.addFirst(pq.poll().tw_id);
         }
         
         return feed;
