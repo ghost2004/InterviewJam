@@ -70,9 +70,9 @@ public class Twitter {
         for (int uid:set) {
             list = selfTwtrMap.get(uid);
             if (list != null) {
-                //int cnt = Math.min(10, list.size());
-                for (int i = 0; i < list.size();i++) {
-                    TwMsg msg = list.get(i);
+                int cnt = Math.min(10, list.size());
+                for (int i = 0; i < cnt;i++) {
+                    TwMsg msg = list.get(list.size()-1-i);
                     //feedTw(pq, msg);
                     pq.offer(msg);
                 }
