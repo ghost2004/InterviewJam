@@ -11,6 +11,7 @@ Note:
 You are not suppose to use the library's sort function for this problem.
  */
 public class SortColors {
+    // count and re-fill solution, 2 passes needed
     public void sortColors(int[] nums) {
         int counters[] = new int[3];
         for (int i = 0; i < nums.length; i++) {
@@ -23,6 +24,41 @@ public class SortColors {
             }
             nums[i] = val;
             counters[val]--;
+        }
+        
+    }
+    
+    // 2 pointer solution, one pass needed
+    /*
+    private void swap(int[] arr, int a, int b) {
+        if (a != b) {
+            int temp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = temp;
+        }
+    }
+    */
+    public void sortColors2(int[] nums) {
+        int redIdx = 0;
+        int blueIdx = nums.length - 1;
+        
+        int idx = 0;
+        while (idx <= blueIdx) {
+            if (nums[idx] == 0) {
+                //swap(nums, idx, redIdx);
+                nums[idx] = nums[redIdx];
+                nums[redIdx] = 0;
+                idx++;
+                redIdx++;
+                
+            } else if (nums[idx] == 2) {
+                //swap(nums, idx, blueIdx);
+                nums[idx] = nums[blueIdx];
+                nums[blueIdx] = 2;
+                blueIdx--;
+            } else {
+                idx++;
+            }
         }
         
     }
