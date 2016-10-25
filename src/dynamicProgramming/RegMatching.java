@@ -41,5 +41,11 @@ public class RegMatching {
         // 3. rest of character matches
         return (s.length() > 0 && (s.charAt(0) == p.charAt(0) || p.charAt(0) =='.') && isMatch(s.substring(1), p.substring(1)));
     }
-
+    
+    public boolean isMatchDP(String s, String p) {
+        int sLen = s.length();
+        
+        
+    }
+    
 }
