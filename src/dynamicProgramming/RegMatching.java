@@ -44,8 +44,36 @@ public class RegMatching {
     
     public boolean isMatchDP(String s, String p) {
         int sLen = s.length();
+        int pLen = p.length();
         
         
+        boolean match[][] = new boolean[sLen+1][pLen+1];
+        
+        match[0][0] = true;
+        
+        for (int i = 1; i <= sLen; i++) {
+            match[i][0] = false;
+        }
+        
+        for (int j = 1; j <= pLen; j++) {
+            if (p.charAt(j-1) == '*')
+                match[0][j] = match[0][j-2];
+            else
+                match[0][j] = false;
+        }
+        
+        for (int i = 1; i <= sLen; i++) {
+            for (int j = 1; j <= pLen; j++) {
+                if (j > 1 && p.charAt(j-1) == '*') {
+                    match[i][j] = match[i][j-2] || (match[i-1][j] && (s.charAt(i-1) == p.charAt(j-2) || p.charAt(j-2) =='.') );
+                } else {
+                    match[i][j] = match[i-1][j-1] &&  (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) =='.') ;
+                }
+                
+            }
+        }
+        
+        return match[sLen][pLen];
     }
     
 }
