@@ -25,10 +25,12 @@ public class CourseSchedule {
             return true;
         int len = prerequisites.length;
         int i;
+        // counters for prerequisites courses
         int pCounter[] = new int[numCourses];
         for (i = 0; i < len; i++) {
             pCounter[prerequisites[i][0]]++;
         }
+        // queues for courses that don't need prerequisites
         Queue<Integer> queue = new LinkedList<Integer>();
         for (i = 0; i < numCourses; i++) {
             if (pCounter[i] == 0)
@@ -40,9 +42,11 @@ public class CourseSchedule {
         while (!queue.isEmpty()) {
             int c = queue.poll();
             for (i = 0; i < len; i++) {
+                // search the courses that need this course for prerequisites
                 if (prerequisites[i][1] == c) {
                     pCounter[prerequisites[i][0]]--;
                     if (pCounter[prerequisites[i][0]] == 0) {
+                        // all prerequisites found, add into queue
                         nopreNum++;
                         queue.add(prerequisites[i][0]);
                     }
