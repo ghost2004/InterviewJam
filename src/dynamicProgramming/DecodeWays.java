@@ -24,7 +24,7 @@ public class DecodeWays {
         return val >=1 && val <=26;
     }
     
-    public int numDecodings(String s) {
+    public int numDecodings_solution1(String s) {
         if (s == null || s.length() == 0)
             return 0;
         if (s.charAt(0) == '0')
@@ -41,6 +41,44 @@ public class DecodeWays {
         }
         
         return ways[s.length()];
+    }
+    
+    // decode ways in single digit
+    private int ways(char c) {
+        if (c == '0')
+            return 0;
+        return 1;
+    }
+    
+    // decode ways in double digit
+    private int ways(char c1, char c2) {
+        if (c1 == '0')
+            return 0;
+        if (c1 == '1') {
+            return 1;
+        }
+        
+        if (c1 == '2' && c2 <= '6') {
+            return 1;
+        }
+        
+        return 0;
+    }
+    
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0)
+            return 0;
+        int res[] = new int[2];
+        res[0] = ways(s.charAt(0));
+        if (s.length() < 2)
+            return res[0];
+        res[1] = res[0]*ways(s.charAt(1)) + ways(s.charAt(0), s.charAt(1));
+        for (int i = 2; i < s.length(); i++) {
+            int temp = res[1];
+            res[1] = res[1]*ways(s.charAt(i)) + res[0]*ways(s.charAt(i-1), s.charAt(i)); 
+            res[0] = temp;
+        }
+        return res[1];
     }
 
 }
