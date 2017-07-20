@@ -51,5 +51,58 @@ public class MaxAverageArrayII {
         
     }
     
+    public double findMaxAverageII(int[] nums, int k) {
+        if (nums == null || nums.length < k)
+            return 0;
+        int i;
+        double maxAvg=0,avg = 0;
+        long sum = 0;
+        int len = k;
+        
+        // get the average of first k elements
+        for (i = 0; i < k; i++) 
+            sum += nums[i];
+        
+        maxAvg = 1.0*sum/k;
+        
+        // for each max average ends at position i
+        for (i = k; i < nums.length; i++ ) {
+            // increase length and get first average
+            len++;
+            sum += nums[i];
+            avg = 1.0* sum / len;
+            
+            long tmpSum = sum;
+            double tmpAvg = avg;
+            // right shift the start of window
+            for (int j = len-1; j >= k; j--) {
+                tmpSum -= nums[i-j];
+                tmpAvg = tmpSum/j;
+                // once found better solution, mark the length and sum
+                if (tmpAvg >= avg) {
+                    len = j;
+                    sum = tmpSum;
+                    avg = tmpAvg;
+                }
+            }
+            
+            maxAvg = Math.max(maxAvg, avg);
+            
+        }
+        
+        
+        
+        return maxAvg;
+        
+        
+    }
+    
+    public static void main(String args[]) {
+        MaxAverageArrayII m = new MaxAverageArrayII();
+        int a1[] = {1,12,-5,-6,50,3};
+        
+        System.out.println(m.findMaxAverageII(a1, 4));
+        
+    }
 
 }
