@@ -72,6 +72,41 @@ persisted across multiple test cases. Please see here for more details.
  */
 import java.util.*;
 public class AutocompleteSystem {
+    
+    private class TrieNode {
+        String val;
+        int count;
+        HashMap<Character, TrieNode> children;
+        
+        public TrieNode(String str) {
+            val = str;
+            count = 0;
+            children = new HashMap<Character, TrieNode>();
+        }
+        
+        public void add(String s, int idx, int num) {
+            
+        }
+        
+        public List<String> getTop3() {
+            
+        }
+        
+        class KeyCounter implements Comparable<KeyCounter> {
+            String val;
+            int count;
+            public KeyCounter(String s, int v) {
+                this.val = s;
+                this.count = v;
+            }
+            public int compareTo(KeyCounter other) {
+                if (this.count == other.count)
+                    return other.val.compareTo(this.val);
+                
+                return this.count - other.count;
+            }
+        }
+    }
     public AutocompleteSystem(String[] sentences, int[] times) {
         
     }
