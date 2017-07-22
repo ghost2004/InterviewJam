@@ -85,12 +85,42 @@ public class AutocompleteSystem {
         }
         
         public void add(String s, int idx, int num) {
-            
+            if (idx == s.length()) {
+            	this.count += num;
+            	return;
+            }
+            char c = s.charAt(idx);
+            TrieNode child = children.get(c);
+            if (child == null) {
+            	child = new TrieNode(s.substring(0, idx+1));
+            	children.put(c, child);
+            }
+            child.add(s, idx+1, num);
+        }
+        
+        private void travel(PriorityQueue<KeyCounter> pq) {
+        	if (this.count != 0) {
+        		pq.offer(new KeyCounter(this.val, this.count));
+        		if (pq.size() > 3)
+        			pq.poll();
+        	}
+        	
+        	for (TrieNode child: children.values())
+        		child.travel(pq);
         }
         
         public List<String> getTop3() {
-            
+        	PriorityQueue<KeyCounter> pq = new PriorityQueue<KeyCounter>();
+        	LinkedList<String> res = new LinkedList<String>();
+        	
+        	this.travel(pq);
+        	
+        	while (!pq.isEmpty())
+        		res.addFirst(pq.poll().val);
+        	return res;
         }
+        
+        
         
         class KeyCounter implements Comparable<KeyCounter> {
             String val;
@@ -107,12 +137,35 @@ public class AutocompleteSystem {
             }
         }
     }
+    TrieNode root;
+    TrieNode curr;
+    String buffer;
+    
     public AutocompleteSystem(String[] sentences, int[] times) {
-        
+        root = new TrieNode("");
+        curr = root;
+        buffer = "";
+        for (int i =0; i < sentences.length; i++) {
+        	root.add(sentences[i], 0, times[i]);
+        }
     }
     
     public List<String> input(char c) {
-        
+    	if (c == '#') {
+    		curr.count++;
+    		curr = root;
+    		buffer = "";
+    		return Collections.emptyList();
+    	}
+    	
+    	buffer += c;
+    	TrieNode child = curr.children.get(c);
+    	if (child == null) {
+    		child = new TrieNode(buffer);
+    		curr.children.put(c, child);
+    	}
+    	curr = child;
+    	return curr.getTop3();
     }
 
 }
