@@ -33,6 +33,8 @@ public class MaxPairChain {
             return this.val1 - other.val1;
         }
     }
+    
+    // DP solution
     public int findLongestChain(int[][] pairs) {
         int count = pairs.length;
         if (count < 2 )
@@ -66,34 +68,29 @@ public class MaxPairChain {
     }
     
     
+    // Greedy algorithm implementation
+    public int findLongestChain2(int[][] pairs) {
+        int count = 1;
+        
+        Arrays.sort(pairs, (a, b) -> a[1] - b[1]);
+        
+        int curEnd = pairs[0][1];
+        
+        for (int i = 1; i < pairs.length; i++) {
+            if (pairs[i][0] > curEnd) {
+                count++;
+                curEnd = pairs[i][1]; 
+            }
+        }
+        return count;
+    }
+    
     public static void main(String args[]) {
         int a1[][] = {{1,2}, {2,3}, {3,4}};
         MaxPairChain m = new MaxPairChain();
         System.out.println(m.findLongestChain(a1));
         
     }
-    /*
-    private class IntervalTree {
-        int begin;
-        int end;
-        int cnt;
-        IntervalTree left;
-        IntervalTree right;
-        
-        public IntervalTree(int x, int y) {
-            this.begin = x;
-            this.begin = y;
-            this.cnt = 1;
-        }
-        
-        public int insert(IntervalTree node) {
-            int cnt = 0;
-            
-            
-            return cnt;
-        }
-    }
-    
-    */
+
 
 }
