@@ -1,7 +1,7 @@
 package Trees;
 /*
  * 
- * Leetcode 650. 2 Keys Keyboard
+ * Leetcode 652. Find Duplicate Subtrees
  * Given a binary tree, return all duplicate subtrees. For each kind of duplicate subtrees, 
  * you only need to return the root node of any one of them.
 
@@ -26,60 +26,35 @@ Therefore, you need to return above trees' root in the form of a list.
 import java.util.*;
 
 public class DuplicateSubTree {
-    HashMap<Integer, ArrayList<TreeNode>> map;
+    HashMap<String, TreeNode> dict;
     
-    private void travel(TreeNode node) {
+    private String travel(TreeNode node) {
         if (node == null)
-            return;
+            return "#";
         
-        ArrayList<TreeNode> list = map.get(node.val);
-        if (list == null) {
-            list = new ArrayList<TreeNode>();
-            map.put(node.val, list);
-        } 
+        String serial = node.val + "|" + travel(node.left) + "|" + travel(node.right);
         
-        list.add(node);
-        travel(node.left);
-        travel(node.right);
+        if (dict.containsKey(serial)) {
+            dict.put(serial, node);
+        } else {
+            dict.put(serial, null);
+        }
+        
+        return serial;
     }
     
-    private boolean compareTree(TreeNode a, TreeNode b) {
-        if (a == null && b == null)
-            return true;
-        if (a == null || b == null)
-            return false;
-        
-        if (a.val != b.val)
-            return false;
-        
-        return compareTree(a.left, b.left) && compareTree(a.right, b.right);
-    }
-    
+
     public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
         List<TreeNode> out = new ArrayList<TreeNode>();
 
-        map = new HashMap<Integer, ArrayList<TreeNode>>();
+        dict = new HashMap<String, TreeNode>();
         travel(root);
-        Set<Map.Entry<Integer, ArrayList<TreeNode>>> entryset = map.entrySet();
-        
-        for (Map.Entry<Integer, ArrayList<TreeNode>> item : entryset) {
-            ArrayList<TreeNode> list = item.getValue();
-            if (list.size() == 1)
-                continue;
-            
-            for (int i = 0; i < list.size()-1; i++)  {
-                TreeNode k1 = list.get(i);
-                for (int j = i+1; j < list.size(); j++) {
-                    TreeNode k2 = list.get(j);
-                    if (compareTree(k1,k2) ){
-                        out.add(k1);
-                    }
-                }
+
+        for (TreeNode n:dict.values()) {
+            if (n != null) {
+                out.add(n);
             }
-            
         }
-        
-        
         
         return out;
     }
