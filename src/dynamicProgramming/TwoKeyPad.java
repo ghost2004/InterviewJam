@@ -52,6 +52,23 @@ public class TwoKeyPad {
         return cnt;
     }
     
+    public int minSteps2(int n) {
+        int cnt = 0;
+        int N = n;
+        int k = 2;
+        
+        while (N >= k) {
+            if (N % k == 0) {
+                cnt += k;
+                N /= k;
+            } else
+                k++;
+        }
+        
+        return cnt;
+        
+    }
+    
     
     public static void main(String args[]) {
         TwoKeyPad t = new TwoKeyPad();
