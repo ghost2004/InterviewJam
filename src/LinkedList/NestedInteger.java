@@ -79,7 +79,7 @@ public class NestedInteger {
         StringBuilder sb = new StringBuilder();
         this.printNi(this, sb);
         String out = sb.toString();
-        return out.substring(1, out.length()-1);
+        return out;
     }
 
     public static NestedInteger getFromString(String input) {
@@ -115,7 +115,7 @@ public class NestedInteger {
             
         }
 
-        return out;
+        return out.getList().get(0);
     }
     
 }
