@@ -33,6 +33,21 @@ public class DuplicatesInArray {
         return out;
         
     }
+    
+    public List<Integer> findDuplicates_Sort(int[] nums) {
+        Arrays.sort(nums);
+        List<Integer> out = new ArrayList<Integer>();
+        
+        for (int i = 0; i < nums.length -1 ; i++) {
+            if (nums[i] == nums[i+1]) {
+                out.add(nums[i]);
+                while ( i <nums.length -1 && nums[i] == nums[i+1])
+                    i++;
+            }
+        }
+        return out;
+    }
+    
 
     public List<Integer> findDuplicates(int[] nums) {
         List<Integer> out = new ArrayList<Integer>();
