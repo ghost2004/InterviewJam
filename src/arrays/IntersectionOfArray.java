@@ -51,9 +51,7 @@ public class IntersectionOfArray {
             else if (nums1[idx1] > nums2[idx2])
                 idx2++;
             else {
-                if (out.isEmpty())
-                    out.add(nums1[idx1]);
-                else if (nums1[idx1] != out.peekLast())
+                if (out.isEmpty() || nums1[idx1] != out.peekLast())
                     out.add(nums1[idx1]);
                 idx1++;
                 idx2++;
