@@ -37,7 +37,7 @@ public class IntersectionOfArray {
     }
     
     public int[] intersection_Sort(int[] nums1, int[] nums2) {
-        HashSet<Integer> out = new HashSet<>();
+        LinkedList<Integer> out = new LinkedList<>();
         
         Arrays.sort(nums1);
         Arrays.sort(nums2);
@@ -51,7 +51,10 @@ public class IntersectionOfArray {
             else if (nums1[idx1] > nums2[idx2])
                 idx2++;
             else {
-                out.add(nums1[idx1]);
+                if (out.isEmpty())
+                    out.add(nums1[idx1]);
+                else if (nums1[idx1] != out.peekLast())
+                    out.add(nums1[idx1]);
                 idx1++;
                 idx2++;
             }
