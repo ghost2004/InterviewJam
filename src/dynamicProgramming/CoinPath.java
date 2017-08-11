@@ -36,23 +36,37 @@ public class CoinPath {
         LinkedList<Integer> out = new LinkedList<>();
         
         int len = A.length;
+        // minimum cost at point i
         int cost[] = new int[len];
+        // previous node with minimum cost
         int prev[] = new int[len];
+        // jump length with minimum cost
+        // only for lexicographical order
         int length[] = new int[len];
-
+        
+        // initialize the arrays, first cost is A[0], previous node is -1, length is 0
         cost[0] = A[0];
         prev[0] = -1;
         length[0] = 0;
         for (int i = 1; i < len; i++) {
+            // cost -1 means not reachable
             cost[i] = -1;
             if (A[i] == -1) {
                 continue;
             }
+            // scan for all possibilities can jump to current node
+            // from left to right -- again, for the lexicographical order
             for (int idx = Math.max(0, i - B); idx < i; idx++) {
+                // skip the non-reachable
                 if (cost[idx] == -1)
                     continue;
                 int newCost = cost[idx] + A[i];
-                if (cost[i] == -1 || newCost < cost[i] || (newCost == cost[i] && length[i] < length[idx] + 1)) {
+                if (cost[i] == -1 ||    // first solution
+                        // better solution
+                        newCost < cost[i] ||    
+                        // same solution with small lexicographical order
+                        (newCost == cost[i] && length[i] < length[idx] + 1)) {
+                    // mark the new solution
                     cost[i] = newCost;
                     prev[i] = idx;
                     length[i] = length[idx] + 1;
@@ -62,6 +76,7 @@ public class CoinPath {
         
         if (cost[len-1] == -1)
             return out;
+        // scan from last to first to get the linklist
         int idx = len-1;
         while (idx != -1) {
             out.addFirst(idx+1);
