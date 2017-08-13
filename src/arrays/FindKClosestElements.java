@@ -20,6 +20,52 @@ public class FindKClosestElements {
     
     public List<Integer> findClosestElements(List<Integer> arr, int k, int x) {
         LinkedList<Integer> out = new LinkedList<>();
+        
+        int left = 0;
+        int right = arr.size() - 1;
+        
+        int mid = 0;
+        
+        while (left <= right) {
+            mid = (left+right)/2;
+            if (arr.get(mid) == x) {
+                break;
+            } else if (arr.get(mid) > x) {
+                right  = mid -1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        if (arr.get(mid) == x) {
+            out.add(x);
+            left = mid - 1;
+            right = mid + 1;
+        } else {
+            right = mid;
+            left = right -1;
+        }
+        
+        while (out.size() < k) {
+            if (left < 0) {
+                out.addLast(arr.get(right++));
+            } else if (right >= arr.size()) {
+                out.addFirst(arr.get(left--));
+            } else {
+                int c1 = arr.get(left);
+                int c2 = arr.get(right);
+                if (x - c1 <= c2 - x) {
+                    out.addFirst(arr.get(left--));
+                } else {
+                    out.addLast(arr.get(right++));
+                }
+            }
+        }
+        return out;
+    }
+    
+    public List<Integer> findClosestElements2(List<Integer> arr, int k, int x) {
+        LinkedList<Integer> out = new LinkedList<>();
         int left = 0;
         int right = arr.size()-1;
         if (x < arr.get(left)) {
