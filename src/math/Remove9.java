@@ -17,7 +17,13 @@ Hint: n will not exceed 9 x 10^8.
 public class Remove9 {
     public int newInteger(int n) {
         int cnt = 0;
-        
+        int base = 1;
+        while (n > 0) {
+            cnt += (n % 9) * base;
+            base *= 10;
+            n /= 9;
+            
+        }
         
         return cnt;
     }
