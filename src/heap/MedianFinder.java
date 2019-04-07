@@ -41,6 +41,18 @@ public class MedianFinder {
         if (maxHeap.size() < minHeap.size())
             maxHeap.offer(minHeap.poll());
     }
+    
+    public void addNum2(int num) {
+        if (minHeap.size()> 0 && num >= minHeap.peek()) {
+            minHeap.offer(num);
+            if (maxHeap.size() < minHeap.size())
+                maxHeap.offer(minHeap.poll());
+        } else {
+            maxHeap.offer(num);
+            if (maxHeap.size() > minHeap.size()+1)
+                minHeap.offer(maxHeap.poll());
+        }
+    }
 
     // Returns the median of current data stream
     public double findMedian() {
