@@ -44,6 +44,7 @@ is more than 1), and so on.
 import java.util.*;
 public class NumberOfAtoms {
     public String countOfAtoms(String formula) {
+        // atoms need to be sorted in out layer
         Map<String, Integer> map = new TreeMap<>();
         Stack<Map<String, Integer>> stack = new Stack<>();
         int length = formula.length();
@@ -53,7 +54,8 @@ public class NumberOfAtoms {
             switch (c) {
             case '(':
                 stack.push(map);
-                map = new TreeMap<>();
+                // atoms don't need to be sorted in inner layer
+                map = new HashMap<>();
                 break;
             case ')':
                 int val = 0;
